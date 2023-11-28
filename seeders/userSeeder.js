@@ -21,10 +21,14 @@ const { User } = require("../models");
 module.exports = async () => {
   const users = [];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     users.push({
       firstname: faker.person.firstName(),
       lastname: faker.person.lastName(),
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      bio: faker.person.bio(),
+      profilePic: faker.image.avatar(),
     });
   }
 

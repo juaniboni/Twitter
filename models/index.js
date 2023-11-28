@@ -13,22 +13,27 @@ const sequelize = new Sequelize(
 
 // Requerir todos los modelos:
 const User = require("./User");
-const Article = require("./Article");
+const Tweet = require("./Tweet");
 
 // Inicializar todos los modelos:
 User.initModel(sequelize);
-Article.initModel(sequelize);
+Tweet.initModel(sequelize);
 
 /**
  * Luego de definir los modelos, se pueden establecer relaciones entre los
  * mismos (usando métodos como belongsTo, hasMany y belongsToMany)...
+ * 
+ * 
  *
  * Por ejemplo, si un User está relacionado con un Article, establecerlo
  * aquí abajo.
  */
 
+// User.hasMany(Tweet, { foreignKey: 'authorId', as: 'userTweets' });
+// Tweet.belongsTo(User, { foreignKey: 'authorId' , as: 'userTweets'});
+
 module.exports = {
   sequelize,
   User,
-  Article,
+  Tweet,
 };
