@@ -6,7 +6,6 @@ async function index(req, res) {
     res.json({ message: "Connected to the server!" });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 

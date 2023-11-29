@@ -6,7 +6,12 @@ const tweetController = require("../controllers/TweetController");
 // ...
 
 router.get("/", tweetController.index);
-router.post("/", tweetController.store);
+
+// esta para subir un tweet
+router.post("/tweet", tweetController.store);
+
+
+
 router.get("/:id", tweetController.show);
 router.patch("/:id", tweetController.update);
 router.delete("/:id", tweetController.destroy);

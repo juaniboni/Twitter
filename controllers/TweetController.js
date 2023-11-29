@@ -7,7 +7,26 @@ async function index(req, res) {}
 async function show(req, res) {}
 
 // Store a newly created resource in storage.
-async function store(req, res) {}
+async function store(req, res) {
+  try {
+    
+    const { content } = req.body;
+
+    // si lo envian vacio 
+    if (!content) {
+      return res.status(400).json({ error: 'Tweet content is required' });
+    }
+
+    // Lo meto en la Base de Datos
+    const newTweet = await Tweet.create({ content });
+
+    // Respond with the created tweet in JSON format
+    res.json(newTweet);
+  } catch (error) {
+    console.error(error);
+    res.json({ error: 'Internal Server Error' });
+  }
+}
 
 // Update the specified resource in storage.
 async function update(req, res) {}
