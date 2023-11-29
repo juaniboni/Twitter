@@ -14,10 +14,12 @@ const sequelize = new Sequelize(
 // Requerir todos los modelos:
 const User = require("./User");
 const Tweet = require("./Tweet");
+const Like = require("./Like");
 
 // Inicializar todos los modelos:
 User.initModel(sequelize);
 Tweet.initModel(sequelize);
+Like.initModel(sequelize);
 
 /**
  * Luego de definir los modelos, se pueden establecer relaciones entre los
@@ -29,11 +31,16 @@ Tweet.initModel(sequelize);
  * aquí abajo.
  */
 
-// User.hasMany(Tweet, { foreignKey: 'authorId', as: 'userTweets' });
-// Tweet.belongsTo(User, { foreignKey: 'authorId' , as: 'userTweets'});
+ User.hasMany(Tweet);
+ Tweet.belongsTo(User);
+ User.hasMany(Like);
+ Like.belongsTo(User);
+ Tweet.hasMany(Like);
+ Like.belongsTo(Tweet);
 
 module.exports = {
   sequelize,
   User,
   Tweet,
+  Like,
 };

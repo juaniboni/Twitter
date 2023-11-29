@@ -1,27 +1,25 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Tweet extends Model {
+class Like extends Model {
   static initModel(sequelize) {
-    Tweet.init(
+    Like.init(
       {
         id: {
           type: DataTypes.BIGINT.UNSIGNED,
           primaryKey: true,
           autoIncrement: true,
-        },
-        content: {
-          type: DataTypes.TEXT(),
-          allowNull: false,
-        },
+        }
+    
       },
       {
         sequelize,
-        modelName: "tweet", // Nombre del modelo en singular y en minúscula.
+        modelName: "like",
+        timestamps: true // Nombre del modelo en singular y en minúscula.
       },
     );
 
-    return Tweet;
+    return Like;
   }
 }
 
-module.exports = Tweet;
+module.exports = Like;

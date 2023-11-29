@@ -24,8 +24,7 @@ module.exports = async () => {
   for (let i = 0; i < 20; i++) {
     tweets.push({
       content: faker.lorem.sentences(1),
-      likes: faker.number.int(100)
-      
+      userId: faker.number.int({ min: 1, max: 20 }) 
     });
   }
 
