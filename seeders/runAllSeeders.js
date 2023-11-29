@@ -14,6 +14,7 @@
  *
  */
 
+
 require("dotenv").config();
 
 async function runAllSeeders() {

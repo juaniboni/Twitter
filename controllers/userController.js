@@ -13,17 +13,15 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const userId = req.params.id;
-    const user = await User.findByPk(userId, {
-      include: Tweet,
-    });
-    const tweet = await Tweet.findAll({ where: { userId: userId } });
+    const user = await User.findByPk(userId);
+    
 
     if (!user) {
       res.status(404).send("User not found");
       return;
     }
 
-    res.render("userID", { user, tweet });
+    res.json(user);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("An error occurred.");

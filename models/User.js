@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const bcrypt = require('bcrypt');
 
 class User extends Model {
   static initModel(sequelize) {
@@ -21,6 +22,15 @@ class User extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+        },
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          set(value) {
+            // Hash the password before saving it to the database
+            const hashedPassword = bcrypt.hashSync(value, 10); // You can adjust the cost factor (10 in this case)
+            this.setDataValue('password', hashedPassword);
+          },
         },
         email: {
           type: DataTypes.STRING,

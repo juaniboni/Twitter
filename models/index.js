@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 
+
 const sequelize = new Sequelize(
   process.env.DB_DATABASE, // Ej: hack_academy_db
   process.env.DB_USERNAME, // Ej: root

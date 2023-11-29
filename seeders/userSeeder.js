@@ -1,3 +1,4 @@
+
 /**
  * El seeder no es más que un archivo que contiene una función que se encarga
  * de insertar datos (generalmente de prueba) en una base de datos.
@@ -26,6 +27,7 @@ module.exports = async () => {
       firstname: faker.person.firstName(),
       lastname: faker.person.lastName(),
       username: faker.internet.userName(),
+      password: faker.internet.password(),
       email: faker.internet.email(),
       bio: faker.person.bio(),
       profilePic: faker.image.avatar(),
