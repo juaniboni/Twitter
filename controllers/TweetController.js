@@ -26,6 +26,7 @@ async function store(req, res) {
     console.error(error);
     res.json({ error: 'Internal Server Error' });
   }
+  console.log("se ha creado un tweet")
 }
 
 // Update the specified resource in storage.

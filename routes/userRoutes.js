@@ -6,8 +6,11 @@ const userController = require("../controllers/userController");
 // ...
 
 router.get("/", userController.index);
+
 router.post("/user", userController.store);
+
 router.get("/:id", userController.show);
+
 router.patch("/:id", userController.update);
 router.delete("/:id", userController.destroy);
 

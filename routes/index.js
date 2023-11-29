@@ -16,5 +16,6 @@ module.exports = (app) => {
 
   app.use("/", userRoutes);
   app.use("/user", userRoutes)
+  app.use("/:id", userRoutes)
   app.use("/tweet", tweetRoutes);
 };
