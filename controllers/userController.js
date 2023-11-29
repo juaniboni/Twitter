@@ -11,7 +11,25 @@ async function index(req, res) {
 }
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByPk(userId, {
+      include: Tweet,
+    });
+    const tweet = await Tweet.findAll({ where: { userId: userId } });
+
+    if (!user) {
+      res.status(404).send("User not found");
+      return;
+    }
+
+    res.render("userID", { user, tweet });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("An error occurred.");
+  }
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {
