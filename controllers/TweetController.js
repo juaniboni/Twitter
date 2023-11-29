@@ -10,7 +10,7 @@ async function show(req, res) {}
 async function store(req, res) {
   try {
     
-    const { content } = req.body;
+    const content  = req.body.content;
 
     // si lo envian vacio 
     if (!content) {
@@ -18,7 +18,7 @@ async function store(req, res) {
     }
 
     // Lo meto en la Base de Datos
-    const newTweet = await Tweet.create({ content });
+    const newTweet = await Tweet.create( content );
 
     // Respond with the created tweet in JSON format
     res.json(newTweet);
