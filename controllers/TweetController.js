@@ -1,7 +1,23 @@
 const { Tweet } = require("../models");
 
 // Display a listing of the resource.
-async function index(req, res) {}
+async function index(req, res) {
+  try {
+    const tweetId = req.params.id;
+
+    const tweet = await Tweet.findByPk(tweetId);
+
+    if (!tweet) {
+      return res.status(404).json({ error: 'Tweet not found' });
+    }
+
+    // Respond with the tweet in JSON format
+    res.json(tweet);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
 
 // Display the specified resource.
 async function show(req, res) {}

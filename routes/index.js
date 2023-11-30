@@ -14,8 +14,9 @@ module.exports = (app) => {
    * la URL `/articles` (en inglés y en plural).
    */
 
-  app.use("/", userRoutes);
-  app.use("/user", userRoutes)
-  app.use("/:id", userRoutes)
-  app.use("/tweet", tweetRoutes);
+  
+  
+  app.use("/users", userRoutes)
+  
+  app.use("/tweets", tweetRoutes);
 };
