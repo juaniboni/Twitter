@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const tweetController = require("../controllers/tweetController");
+const tweetController = require("../controllers/TweetController");
 
 // Rutas relacionadas a los artículos:
 // ...
@@ -13,7 +13,7 @@ router.post("/", tweetController.store);
 router.get("/:id", tweetController.show);
 
 // esta ruta para updatear los likes del tweet
-router.patch("/:id", tweetController.update);
+router.patch("/:id/like", tweetController.update);
 
 router.delete("/:id", tweetController.destroy);
 

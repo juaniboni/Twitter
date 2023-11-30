@@ -34,7 +34,7 @@ Like.initModel(sequelize);
 
  User.hasMany(Tweet);
  Tweet.belongsTo(User);
- User.hasMany(Like);
+//  User.hasMany(Like);
  Like.belongsTo(User);
  Tweet.hasMany(Like);
  Like.belongsTo(Tweet);

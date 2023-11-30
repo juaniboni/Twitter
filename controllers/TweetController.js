@@ -1,10 +1,10 @@
-const { Tweet, User } = require("../models");
+const { Tweet, User, Like } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {
   try {
     const tweets = await Tweet.findAll({
-      order: [['createdAt', 'DESC']],
+      order: [["createdAt", "DESC"]],
       limit: 20,
     });
     res.json(tweets);
@@ -13,7 +13,6 @@ async function index(req, res) {
     res.status(500).send("An error occurred.");
   }
 }
-
 
 // Display the specified resource.
 async function show(req, res) {}
@@ -25,7 +24,7 @@ async function store(req, res) {
     const content = req.body.content;
 
     // Log the received content
-    console.log('Received content:', content);
+    console.log("Received content:", content);
 
     // si lo envian vacio
     if (!content) {
@@ -39,11 +38,41 @@ async function store(req, res) {
     console.error(error);
     res.json({ error: "Internal Server Error" });
   }
-  console.log("se ha creado un tweet")
+  console.log("se ha creado un tweet");
 }
 
 // Update the specified resource in storage.
-async function update(req, res) {}
+async function update(req, res) {
+  const userId = req.body.userId;
+  const tweetId = req.params.id;
+  const ifLike = req.body.ifLike;
+
+  try {
+    const existingLike = await Like.findOne({ where: { userId, tweetId } });
+
+    if (ifLike === "1") {
+      if (existingLike) {
+        return res.json({ message: "Ya has dado like a este tweet" });
+      } else {
+        const newLike = await Like.create({
+          userId,
+          tweetId,
+        });
+        return res.json(newLike);
+      }
+    } else if (ifLike === "0") {
+      if (existingLike) {
+        await existingLike.destroy();
+        return res.json({ message: "El like se ha eliminado" });
+      } else {
+        return res.json({ message: "No has dado like a este tweet aún" });
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al realizar la acción de like" });
+  }
+}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {

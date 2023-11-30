@@ -8,13 +8,18 @@ class Like extends Model {
           type: DataTypes.BIGINT.UNSIGNED,
           primaryKey: true,
           autoIncrement: true,
-        }
-    
+        },
       },
       {
         sequelize,
         modelName: "like",
-        timestamps: true // Nombre del modelo en singular y en minúscula.
+        timestamps: true, // Nombre del modelo en singular y en minúscula.
+        indexes: [
+          {
+            unique: true,
+            fields: ["userId", "tweetId"],
+          },
+        ],
       },
     );
 
