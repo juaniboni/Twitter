@@ -1,23 +1,19 @@
-const { Tweet } = require("../models");
+const { Tweet, User } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {
   try {
-    const tweetId = req.params.id;
-
-    const tweet = await Tweet.findByPk(tweetId);
-
-    if (!tweet) {
-      return res.status(404).json({ error: 'Tweet not found' });
-    }
-
-    // Respond with the tweet in JSON format
-    res.json(tweet);
+    const tweets = await Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      limit: 20,
+    });
+    res.json(tweets);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching tweets:", error);
+    res.status(500).send("An error occurred.");
   }
 }
+
 
 // Display the specified resource.
 async function show(req, res) {}
@@ -35,10 +31,8 @@ async function store(req, res) {
     if (!content) {
       return res.status(400).json({ error: "Tweet content is required" });
     }
-
     // Lo meto en la Base de Datos
     const newTweet = await Tweet.create({ content });
-
     // Respond with the created tweet in JSON format
     res.json(newTweet);
   } catch (error) {
