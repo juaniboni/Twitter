@@ -8,12 +8,13 @@ const tweetController = require("../controllers/TweetController");
 router.get("/", tweetController.index);
 
 // esta para subir un tweet
-router.post("/tweet", tweetController.store);
-
-
+router.post("/", tweetController.store);
 
 router.get("/:id", tweetController.show);
+
+// esta ruta para updatear los likes del tweet
 router.patch("/:id", tweetController.update);
+
 router.delete("/:id", tweetController.destroy);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const app = express();
 
 // app.use(cors()); // Para habilitar esta línea es necesario instalar la librería `cors`.
 app.use(express.static("public"));
-app.use(express.urlencoded())
+app.use(express.urlencoded());
 app.use(express.json());
 
 routes(app);

@@ -12,21 +12,52 @@ async function index(req, res) {
 // Display the specified resource.
 async function show(req, res) {
   try {
-    const userId = req.params.id;
-    const user = await User.findByPk(userId);
-    
+    const userName = req.params.username;
+    const user = await User.findOne({ where: { username: userName } });
 
     if (!user) {
       res.status(404).send("User not found");
       return;
     }
+// esta variable es un user sin el password 
+    const userWithoutPassword = {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user. lastname,
+      username: user.username,
+      email: user.email,
+      bio: user.bio,
+      profilePic: user.profilePic,
+    
+    };
 
-    res.json(user);
+    res.json(userWithoutPassword);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("An error occurred.");
   }
 }
+
+// Display the specified resource.
+//
+//   try {
+//     const userId = req.params.id;
+//     const user = await User.findByPk(userId, {
+//       include: Tweet,
+//     });
+//     const tweet = await Tweet.findAll({ where: { userId: userId } });
+
+//     if (!user) {
+//       res.status(404).send("User not found");
+//       return;
+//     }
+
+//     res.render("userID", { user, tweet });
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).send("An error occurred.");
+//   }
+// }
 
 // Store a newly created resource in storage.
 async function store(req, res) {
@@ -36,6 +67,7 @@ async function store(req, res) {
       firstname,
       lastname,
       username,
+      password,
       email,
       bio,
       profilePic,

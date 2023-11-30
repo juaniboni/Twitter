@@ -1,7 +1,23 @@
 const { Tweet } = require("../models");
 
 // Display a listing of the resource.
-async function index(req, res) {}
+async function index(req, res) {
+  try {
+    const tweetId = req.params.id;
+
+    const tweet = await Tweet.findByPk(tweetId);
+
+    if (!tweet) {
+      return res.status(404).json({ error: 'Tweet not found' });
+    }
+
+    // Respond with the tweet in JSON format
+    res.json(tweet);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
 
 // Display the specified resource.
 async function show(req, res) {}
@@ -17,7 +33,7 @@ async function store(req, res) {
     }
 
     // Lo meto en la Base de Datos
-    const newTweet = await Tweet.create({ content });
+    const newTweet = await Tweet.create( content );
 
     // Respond with the created tweet in JSON format
     res.json(newTweet);
@@ -25,6 +41,7 @@ async function store(req, res) {
     console.error(error);
     res.json({ error: "Internal Server Error" });
   }
+  console.log("se ha creado un tweet")
 }
 
 // Update the specified resource in storage.
