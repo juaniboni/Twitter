@@ -4,6 +4,7 @@ const { Tweet, User, Like } = require("../models");
 async function index(req, res) {
   try {
     const tweets = await Tweet.findAll({
+      include: User,
       order: [["createdAt", "DESC"]],
       limit: 20,
     });

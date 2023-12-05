@@ -11,9 +11,9 @@ router.post("/", userController.store);
 
 router.get("/:username", userController.show);
 
-router.patch("/:id", userController.update);
+router.patch("/:username", userController.update);
 
-router.delete("/:id", userController.destroy);
+router.delete("/:username", userController.destroy);
 
 
 

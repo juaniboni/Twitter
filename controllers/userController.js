@@ -2,8 +2,9 @@ const { User, Tweet } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {
+  const allUsers = await User.findAll()
   try {
-    res.json({ message: "Connected to the server!" });
+    res.json(allUsers);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -13,7 +14,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const userName = req.params.username;
-    const user = await User.findOne({ where: { username: userName } });
+    const user = await User.findOne({ where: { username: userName }, include:Tweet });
 
     if (!user) {
       res.status(404).send("User not found");
@@ -28,7 +29,7 @@ async function show(req, res) {
       email: user.email,
       bio: user.bio,
       profilePic: user.profilePic,
-    
+
     };
 
     res.json(userWithoutPassword);
