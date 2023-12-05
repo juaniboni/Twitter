@@ -1,4 +1,6 @@
 const { User, Tweet } = require("../models");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -39,26 +41,29 @@ async function show(req, res) {
   }
 }
 
-// Display the specified resource.
-//
-//   try {
-//     const userId = req.params.id;
-//     const user = await User.findByPk(userId, {
-//       include: Tweet,
-//     });
-//     const tweet = await Tweet.findAll({ where: { userId: userId } });
+async function login(req, res) {
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
 
-//     if (!user) {
-//       res.status(404).send("User not found");
-//       return;
-//     }
+  const user = await User.findOne({ where: { email: userEmail } });
+  if (user.length === 0) {
+    return res.json("Este usuario no existe");
+  }
 
-//     res.render("userID", { user, tweet });
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).send("An error occurred.");
-//   }
-// }
+  const validatePassword = await bcrypt.compare(userPassword, user.password);
+
+  console.log(validatePassword);
+  console.log(userPassword);
+
+  if (validatePassword === false) {
+    return res.json("Las credenciales son incorrectas");
+  }
+
+  // Habiendo validado todos los datos, nos vamos a dedicar a elaborar un token...
+  const token = jwt.sign({ id: user.id }, "stringsecreto");
+
+  return res.json(token);
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {
@@ -96,4 +101,5 @@ module.exports = {
   store,
   update,
   destroy,
+  login,
 };
