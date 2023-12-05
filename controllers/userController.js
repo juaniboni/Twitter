@@ -2,7 +2,7 @@ const { User, Tweet } = require("../models");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const allUsers = await User.findAll()
+  const allUsers = await User.findAll();
   try {
     res.json(allUsers);
   } catch (error) {
@@ -14,22 +14,22 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const userName = req.params.username;
-    const user = await User.findOne({ where: { username: userName }, include:Tweet });
+    const user = await User.findOne({ where: { username: userName }, include: Tweet });
 
     if (!user) {
       res.status(404).send("User not found");
       return;
     }
-// esta variable es un user sin el password 
+    // esta variable es un user sin el password
     const userWithoutPassword = {
       id: user.id,
       firstname: user.firstname,
-      lastname: user. lastname,
+      lastname: user.lastname,
       username: user.username,
       email: user.email,
       bio: user.bio,
       profilePic: user.profilePic,
-
+      tweets: user.tweets,
     };
 
     res.json(userWithoutPassword);
