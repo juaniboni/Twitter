@@ -67,7 +67,7 @@ async function login(req, res) {
 
 // Store a newly created resource in storage.
 async function store(req, res) {
-  const { firstname, lastname, username,password, email, bio, profilePic } = req.body;
+  const { firstname, lastname, username, password, email, bio, profilePic } = req.body;
   try {
     const newUser = await User.create({
       firstname,
