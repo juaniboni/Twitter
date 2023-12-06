@@ -15,10 +15,10 @@ module.exports = (app) => {
    * la URL `/articles` (en inglés y en plural).
    */
 
-  
-  
-  app.use("/users", userRoutes)
-  
+  app.use("/", userRoutes);
+
+  app.use("/users", userRoutes);
+
   app.use("/tweets", tweetRoutes);
 
   app.use("/token", tokenRoutes);
