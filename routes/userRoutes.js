@@ -6,7 +6,8 @@ const { expressjwt: checkJwt } = require("express-jwt");
 // Rutas relacionadas a los usuarios:
 // ...
 
-router.get("/", userController.index);
+
+router.get("/", checkJwt({ secret: "stringsecreto", algorithms: ["HS256"] }) ,userController.index);
 
 router.post("/", userController.store);
 
@@ -16,8 +17,8 @@ router.get(
   userController.show,
 );
 
-router.patch("/:username", userController.update);
+router.patch("/:username",  checkJwt({ secret: "stringsecreto", algorithms: ["HS256"] }),userController.update);
 
-router.delete("/:username", userController.destroy);
+router.delete("/:username", checkJwt({ secret: "stringsecreto", algorithms: ["HS256"] }) ,userController.destroy);
 
 module.exports = router;
