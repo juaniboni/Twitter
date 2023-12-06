@@ -51,17 +51,16 @@ async function login(req, res) {
       return res.status(404).json("User not found");
     }
 
-    validatePassword = await bcrypt.compare(userPassword, user.password);
+    const validatePassword = await bcrypt.compare(userPassword, user.password);
     if (!validatePassword) {
       return res.status(401).json("Invalid password");
     }
-
     // Habiendo validado todos los datos, nos vamos a dedicar a elaborar un token...
     const token = jwt.sign({ id: user.id }, "stringsecreto");
 
     console.log("Token creado:", token);
 
-    return res.json(token);
+    return res.json({ token });
   } catch (error) {
     console.error("Error al procesar la solicitud de inicio de sesión:", error);
     return res.status(500).json("Internal Server Error");
@@ -71,14 +70,13 @@ async function login(req, res) {
 // Store a newly created resource in storage.
 async function store(req, res) {
   const { firstname, lastname, username, password, email, bio, profilePic } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     const newUser = await User.create({
       firstname,
       lastname,
       username,
-      password: hashedPassword,
+      password,
       email,
       bio,
       profilePic,
